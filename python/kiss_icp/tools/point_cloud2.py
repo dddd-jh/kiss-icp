@@ -74,10 +74,11 @@ def read_point_cloud(msg) -> Tuple[np.ndarray, Union[np.ndarray, None]]:
     )
 
     # Remove nan if any
-    points = points[~np.any(np.isnan(points), axis=1)]
+    valid_points = ~np.any(np.isnan(points), axis=1)
+    points = points[valid_points]
 
     if t_field:
-        timestamps = points_structured[t_field].astype(np.float64)
+        timestamps = points_structured[t_field][valid_points].astype(np.float64)
     else:
         timestamps = np.array([])
     return points.astype(np.float64), timestamps
