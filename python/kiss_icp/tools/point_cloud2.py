@@ -99,12 +99,13 @@ def read_points(
     :param reshape_organized_cloud: Returns the array as an 2D organized point cloud if set.
     :return: Structured NumPy array containing all points.
     """
-    # Cast bytes to numpy array
+    # Honor row padding before flattening into a row-major list of points.
     points = np.ndarray(
-        shape=(cloud.width * cloud.height,),
+        shape=(cloud.height, cloud.width),
         dtype=dtype_from_fields(cloud.fields, point_step=cloud.point_step),
         buffer=cloud.data,
-    )
+        strides=(cloud.row_step, cloud.point_step),
+    ).reshape(-1)
 
     # Keep only the requested fields
     if field_names is not None:
