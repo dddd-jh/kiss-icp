@@ -103,7 +103,7 @@ class HeLiPRDataset:
         with open(file_path, "rb") as f:
             binary = f.read()
             offset = 0
-            while offset < len(binary) - chunk_size:
+            while offset <= len(binary) - chunk_size:
                 list_lines.append(struct.unpack_from(f"={format_string}", binary, offset))
                 offset += chunk_size
         data = np.stack(list_lines)
