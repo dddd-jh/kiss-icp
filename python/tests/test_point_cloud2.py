@@ -46,6 +46,7 @@ def make_cloud(points, timestamp_field=None):
         height=1,
         is_bigendian=False,
         point_step=struct.calcsize(point_format),
+        row_step=len(points) * struct.calcsize(point_format),
         data=data,
     )
 
