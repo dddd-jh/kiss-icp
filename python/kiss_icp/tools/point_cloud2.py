@@ -116,7 +116,7 @@ def read_points(
 
     # Swap array if byte order does not match
     if bool(sys.byteorder != "little") != bool(cloud.is_bigendian):
-        points = points.byteswap(inplace=True)
+        points = points.byteswap(inplace=False)
 
     # Select points indexed by the uvs field
     if uvs is not None:
